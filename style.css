@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Nền 3D động */
+.bg-3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0077b6, #00b4d8, #90e0ef);
+    z-index: -2;
+    animation: bgDiChuyen 15s infinite alternate;
+}
+@keyframes bgDiChuyen {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.2) rotate(2deg); }
+}
+.bg-3d::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    animation: hieuUngSang 8s infinite ease-in-out;
+}
+@keyframes hieuUngSang {
+    0%,100% { transform: translate(-20%,-20%); opacity: 0.7; }
+    50% { transform: translate(20%,20%); opacity: 1; }
+}
+
+/* Hộp đăng nhập/đăng ký */
+.auth-container {
+    max-width: 420px;
+    margin: 80px auto;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    transform-style: preserve-3d;
+    animation: hieuUngNhap 0.6s ease;
+}
+@keyframes hieuUngNhap {
+    from { transform: translateZ(-50px); opacity: 0; }
+    to { transform: translateZ(0); opacity: 1; }
+}
+.tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+.tab-btn {
+    flex:1; padding:10px; border:none; border-radius:8px;
+    background: rgba(255,255,255,0.2); color:white; cursor:pointer;
+    transition: 0.3s;
+}
+.tab-btn.active { background: #0096c7; font-weight:bold; }
+.form-box { display:none; }
+.form-box.active { display:block; }
+input, select, button {
+    width:100%; padding:12px; margin:8px 0; border:none; border-radius:8px;
+    background:rgba(255,255,255,0.9); color:#023047; font-size:15px;
+}
+button { background:#0077b6; color:white; font-weight:bold; transition:0.3s; }
+button:hover { background:#023e8a; transform: translateY(-2px); }
+
+/* Giao diện chính */
+.main-container { width:95%; max-width:1200px; margin:20px auto; }
+.top-bar {
+    display:flex; flex-wrap:wrap; gap:15px; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,0.1); padding:15px; border-radius:10px; margin-bottom:20px;
+}
+.balance { font-size:17px; font-weight:bold; }
+.menu-sidebar {
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;
+}
+.menu-item {
+    padding:10px 15px; background:rgba(255,255,255,0.15); border-radius:8px;
+    color:white; text-decoration:none; transition:0.3s;
+}
+.menu-item:hover, .ho-tro { background:#00b4d8; }
+.section {
+    background:rgba(255,255,255,0.1); padding:20px; border-radius:12px;
+    margin-bottom:20px; backdrop-filter: blur(8px);
+}
+.product-card, .quantity { margin:15px 0; }
+.quantity { display:flex; gap:5px; align-items:center; max-width:160px; }
+.quantity input { width:50px; text-align:center; }
+.luu-y, .note { color:#ffd60a; font-size:14px; margin-top:8px; }
+.history-list { background:rgba(0,0,0,0.1); padding:15px; border-radius:8px; min-height:120px; }
+
+/* Khu Admin */
+.admin-modal {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center;
+    z-index:999;
+}
+.admin-login-form, .admin-content {
+    background:#023047; padding:25px; border-radius:12px; width:90%; max-width:500px;
+}
+.dong-btn { background:#e63946; }
