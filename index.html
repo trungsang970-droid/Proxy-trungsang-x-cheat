@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nền Tảng Dịch Vụ - An Toàn & Nhanh Chóng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Nền hiệu ứng 3D động -->
+    <div class="bg-3d"></div>
+
+    <!-- Hộp đăng nhập/đăng ký -->
+    <div class="auth-container" id="authBox">
+        <div class="tab-buttons">
+            <button class="tab-btn active" id="loginTab">Đăng Nhập</button>
+            <button class="tab-btn" id="registerTab">Đăng Ký</button>
+        </div>
+
+        <!-- Form Đăng Nhập -->
+        <div class="form-box active" id="loginForm">
+            <h2>Đăng Nhập Tài Khoản</h2>
+            <input type="text" id="loginUser" placeholder="Tên tài khoản" required>
+            <input type="password" id="loginPass" placeholder="Mật khẩu" required>
+            <button onclick="dangNhap()">Đăng Nhập Ngay</button>
+        </div>
+
+        <!-- Form Đăng Ký -->
+        <div class="form-box" id="registerForm">
+            <h2>Tạo Tài Khoản Mới</h2>
+            <input type="text" id="regUser" placeholder="Tên tài khoản (không trùng lặp)" required>
+            <input type="password" id="regPass" placeholder="Mật khẩu" required>
+            <button onclick="dangKyTaiKhoan()">Đăng Ký & Xác Nhận</button>
+        </div>
+    </div>
+
+    <!-- Giao diện chính sau khi đăng nhập -->
+    <div class="main-container" id="mainUI" style="display:none;">
+        <div class="top-bar">
+            <span class="balance">💳 Số dư tài khoản: <strong id="soDu">0</strong> VNĐ</span>
+            <button class="logout-btn" onclick="dangXuat()">Đăng Xuất</button>
+            <button class="admin-btn" onclick="moKhuAdmin()">🔐 Admin</button>
+        </div>
+
+        <div class="menu-sidebar">
+            <a href="#taiKhoan" class="menu-item">👤 Tài Khoản</a>
+            <a href="#muaProxy" class="menu-item">🌐 Mua Proxy</a>
+            <a href="#muaProAcc" class="menu-item">🛒 Mua Pro/Acc</a>
+            <a href="#napChuyenKhoan" class="menu-item">💸 Nạp tiền chuyển khoản</a>
+            <a href="#napThe" class="menu-item">💳 Nạp tiền thẻ cào</a>
+            <a href="#lichSu" class="menu-item">📜 Lịch sử Tất Cả</a>
+            <a href="https://zalo.me/0372822927" target="_blank" class="menu-item ho-tro">💬 Hỗ Trợ</a>
+        </div>
+
+        <!-- Nội dung từng khu vực -->
+        <div class="content-area">
+            <!-- Khu Tài Khoản -->
+            <div class="section" id="taiKhoan">
+                <h2>Thông Tin Tài Khoản</h2>
+                <p>Tên tài khoản: <span id="tenHienThi"></span></p>
+                <p>Trạng thái: Hoạt động bình thường</p>
+            </div>
+
+            <!-- Khu Mua Proxy -->
+            <div class="section" id="muaProxy">
+                <h2>PROXY VIP V2</h2>
+                <div class="product-card">
+                    <p>1 - Ngày: <strong>40.000 VNĐ</strong></p>
+                    <p>2 - Tuần: <strong>100.000 VNĐ</strong></p>
+                    <p>3 - Tháng: <strong>200.000 VNĐ</strong></p>
+                    <select id="loaiProxy">
+                        <option value="40000">Ngày - 40.000đ</option>
+                        <option value="100000">Tuần - 100.000đ</option>
+                        <option value="200000">Tháng - 200.000đ</option>
+                    </select>
+                    <div class="quantity">
+                        <button onclick="giamSoLuong()">-</button>
+                        <input type="number" id="soLuong" min="1" max="99" value="1">
+                        <button onclick="tangSoLuong()">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="xacNhanMuaProxy()">✅ Xác Nhận Mua</button>
+                    <p class="note">⚠️ Tiền sẽ trừ ngay lập tức, không hoàn lại. Chờ 1-10 phút nhận key tại đây</p>
+                    <div class="key-receive" id="keyNhan"></div>
+                </div>
+            </div>
+
+            <!-- Khu Mua Pro/Acc -->
+            <div class="section" id="muaProAcc">
+                <h2>Mua Pro / Tài Khoản Dịch Vụ</h2>
+                <p>Chọn gói dịch vụ bạn cần, cơ chế thanh toán & nhận key giống Proxy</p>
+                <input type="text" placeholder="Loại dịch vụ cần mua">
+                <button class="buy-btn">Xác Nhận Mua</button>
+            </div>
+
+            <!-- Nạp tiền chuyển khoản -->
+            <div class="section" id="napChuyenKhoan">
+                <h2>Nạp Tiền Bằng Chuyển Khoản</h2>
+                <p>💡 Tối thiểu nạp: <strong>40.000 VNĐ</strong></p>
+                <input type="number" id="tienChuyen" min="40000" placeholder="Nhập số tiền cần nạp">
+                <button onclick="hienMaQR()">📲 Hiện Mã QR Thanh Toán</button>
+                <p class="luu-y">⚠️ Chuyển khoản đúng nội dung & số tiền mới được cộng tiền tự động</p>
+            </div>
+
+            <!-- Nạp tiền thẻ cào -->
+            <div class="section" id="napThe">
+                <h2>Nạp Tiền Bằng Thẻ Cào</h2>
+                <p>💡 Tối thiểu nạp: <strong>40.000 VNĐ</strong></p>
+                <select id="loaiThe">
+                    <option>Chọn loại thẻ</option>
+                    <option>Viettel</option>
+                    <option>Vinaphone</option>
+                    <option>Mobifone</option>
+                    <option>Garena</option>
+                    <option>Zing</option>
+                </select>
+                <select id="menhGiaThe">
+                    <option>Chọn mệnh giá</option>
+                    <option value="20000">20.000 VNĐ</option>
+                    <option value="30000">30.000 VNĐ</option>
+                    <option value="50000">50.000 VNĐ</option>
+                    <option value="100000">100.000 VNĐ</option>
+                    <option value="200000">200.000 VNĐ</option>
+                    <option value="500000">500.000 VNĐ</option>
+                </select>
+                <input type="text" placeholder="Mã số thẻ">
+                <input type="text" placeholder="Mã số seri">
+                <button onclick="xacNhanNapThe()">✅ Xác Nhận Nạp Thẻ</button>
+            </div>
+
+            <!-- Lịch sử toàn bộ -->
+            <div class="section" id="lichSu">
+                <h2>📜 Lịch Sử Tất Cả Hoạt Động</h2>
+                <div class="history-list" id="danhSachLichSu">
+                    <p>Chưa có hoạt động nào được ghi lại</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Khu Đăng Nhập Admin -->
+    <div class="admin-modal" id="adminBox">
+        <div class="admin-login-form">
+            <h3>🔐 Khu Vực Quản Trị Admin</h3>
+            <input type="text" id="adminUser" placeholder="Tên đăng nhập Admin">
+            <input type="password" id="adminPass" placeholder="Mật khẩu Admin" style="font-family: password;">
+            <button onclick="kiemTraAdmin()">Vào Hệ Thống</button>
+            <button class="dong-btn" onclick="dongKhuAdmin()">Đóng</button>
+        </div>
+        <div class="admin-content" id="adminNoiDung" style="display:none;">
+            <h4>📋 Yêu cầu nạp tiền & phân phối Key</h4>
+            <div id="yeuCauAdmin"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
