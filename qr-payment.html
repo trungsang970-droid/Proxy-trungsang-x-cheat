@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Thanh Toán MB Bank</title>
+    <style>
+        body { background: #0077b6; color:white; text-align:center; padding:20px; font-family:Arial; }
+        .qr-box { background:white; color:#023047; padding:20px; border-radius:12px; max-width:350px; margin:auto; }
+        img { width:100%; border-radius:8px; }
+        .luu-y { color:#d00000; font-weight:bold; margin-top:15px; }
+    </style>
+</head>
+<body>
+    <div class="qr-box">
+        <h3>TRẢ TIỀN CHO: TRAN TRUNG SANG</h3>
+        <p>Số tài khoản: 0372822927 | MB Bank</p>
+        <p>Số tiền: <strong id="soTien"></strong> VNĐ</p>
+        <!-- Thay thế bằng ảnh QR của bạn -->
+        <img src="https://i.imgur.com/...LINK_ANH_QR_CUA_BAN.jpg" alt="Mã QR VietQR MB">
+        <p>Nội dung chuyển khoản: NAPTIEN + Tên tài khoản của bạn</p>
+        <div class="luu-y">⚠️ CHUYỂN ĐÚNG SỐ TIỀN & NỘI DUNG ĐỂ ĐƯỢC CỘT TIỀN TỰ ĐỘNG</div>
+    </div>
+    <script>
+        const tien = new URLSearchParams(window.location.search).get("amount") || 40000;
+        document.getElementById("soTien").textContent = Number(tien).toLocaleString("vi-VN");
+    </script>
+</body>
+</html>
